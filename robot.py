@@ -8,8 +8,8 @@ import math
 
 
 vrep.simxFinish(-1)
-# connects to vrep
-clientID = vrep.simxStart('127.0.0.1',19997,True, True,5000,5)
+# connects to Vrep
+clientID = vrep.simxStart('127.0.0.1',19999,True, True,5000,5)
 
 if clientID != -1:
     print("Connection Established!")
@@ -23,7 +23,9 @@ _, J3_handle = vrep.simxGetObjectHandle(clientID, 'J3', vrep.simx_opmode_oneshot
 _, J4_handle = vrep.simxGetObjectHandle(clientID, 'J4', vrep.simx_opmode_oneshot_wait)
 _, cam_handle = vrep.simxGetObjectHandle(clientID, 'Vision1', vrep.simx_opmode_oneshot_wait)
 
+
 while(1):
+    # randomly chooses joint movement
     vrep.simxSetJointPosition(clientID, J1_handle, math.radians(random.randint(0, 360)), vrep.simx_opmode_oneshot)
     vrep.simxSetJointPosition(clientID, J2_handle, math.radians(random.randint(-65, 65)), vrep.simx_opmode_oneshot)
     vrep.simxSetJointPosition(clientID, J3_handle, math.radians(random.randint(0, 360)), vrep.simx_opmode_oneshot)
@@ -52,16 +54,5 @@ while(1):
         vrep.simxSetJointPosition(clientID, J3_handle, 0, vrep.simx_opmode_oneshot)
         vrep.simxSetJointPosition(clientID, J4_handle, 0, vrep.simx_opmode_oneshot)
         time.sleep(2)
-        print("Process stopped by user")
-        break
-
-
-
-
-
-
-
-
-
-
+        sys.exit("Process stopped by user")
 
